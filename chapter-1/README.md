@@ -43,4 +43,21 @@ Learning to thing recursively iss learning to look for big things that are mad o
 * **Plygons:** Inserting any internal line between two non-adjacent vertices on a polygon result on two smaller polygons
 * **Strings:** Delete the first character of a string and end up with a smaller string
 
+# Proof by Contradiction
+The basic schema of a contradiction is:
+* Assume that the hypothesis *is false*
+* Develop some logical consequences of this assumption
+* Show that one consequence is demonstrably false, thereby showing that the assumption is false
 
+E.g.: Euclid's proof of infinite prime numbers. If we assume that there is a finite number of prime numbers as *p1, ..., pm* and start working with that.
+We construct a number that is the product of all the prime numbers:
+```go
+n := []int{p1, ... ,pn}
+m := len(n)
+prod := 1
+for i:=0; i<m; i++ {
+    prod = prod*n[i]
+}
+```
+
+This `prod` should be divisible by all prime numbers because the way it is contructed. But if we consider `prod + 1` it can't be divisible by 2 (a prime number) because `prod` already is. Same if try division by 3 and every other listed prime number. Since `prod + 1` can not be divible by all listed number on `n` `prod + 1` must be a prime number, disproving that only exist a `m` amount of prime numbers.
