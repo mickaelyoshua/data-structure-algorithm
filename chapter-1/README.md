@@ -55,9 +55,16 @@ We construct a number that is the product of all the prime numbers:
 n := []int{p1, ... ,pn}
 m := len(n)
 prod := 1
+
 for i:=0; i<m; i++ {
     prod = prod*n[i]
 }
 ```
 
-This `prod` should be divisible by all prime numbers because the way it is contructed. But if we consider `prod + 1` it can't be divisible by 2 (a prime number) because `prod` already is. Same if try division by 3 and every other listed prime number. Since `prod + 1` can not be divible by all listed number on `n` `prod + 1` must be a prime number, disproving that only exist a `m` amount of prime numbers.
+This `prod` should be divisible by all prime numbers because the way it is contructed. But if we consider `prod + 1` it can't be divisible by 2 (a prime number) because `prod` already is. Same if try division by 3 and every other listed prime number. Since `prod + 1` can not be divible by all listed number on `n`, `prod + 1` must be a prime number, disproving that only exist a `m` amount of prime numbers.
+
+# War Story: Psychic Modeling
+Problem on page 39 of the studied book.
+Implementation: [Psychic Modeling](./psychicModeling.go)
+
+
