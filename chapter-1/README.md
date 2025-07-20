@@ -1,4 +1,5 @@
-# Induction and Recursion
+# Notes
+## Induction and Recursion
 
 As the book says, recursion is basically induction in action.
 
@@ -23,7 +24,7 @@ func FibonacciRecursion(n int) int {
 }
 ```
 
-# Combinatorial Objects
+## Combinatorial Objects
 Most of the algorithms are designed to work on specific abstract structures:
 * **Permutation:** Are arrangements or ordering of items. The permutation of a set are different ways of organizing it's elements. E.g.: {1, 4, 3, 2} and {4, 3, 2, 1} are permutations of the same set
 * **Subsets:** Represent a section, a small set, of an existing set. E.g.: {1, 3, 4} and {2} are two distinct subsets of the first four integers
@@ -33,17 +34,17 @@ Most of the algorithms are designed to work on specific abstract structures:
 * **Plygons:** Define regions in some geometric spaces. E.g.: The borders of a country
 * **Strings:** Sequence of characters or patterns. E.g.: A personal name
 
-# Recurcive Objects
+## Recurcive Objects
 Learning to thing recursively iss learning to look for big things that are mad of small things from the same type. Each abstract structure can be described on a recursive way.
 * **Permutation:** Delete the first element of a permutation of *n* things {1,...,n} and you end up with a permutation of *n-1* things {1,...,n-1}
 * **Subsets:** Every subset of {1,...,n} contains a subset of {1,...,n-1}
 * **Trees:** Delete the root of a tree and we get a set of small trees
 * **Graphs:** Delete any vertex of a graph and you get a smaller graph
 * **Points:** Take a cloud of points and separate them with a line, now we have two smaller clouds of points
-* **Plygons:** Inserting any internal line between two non-adjacent vertices on a polygon result on two smaller polygons
+* **Polygons:** Inserting any internal line between two non-adjacent vertices on a polygon result on two smaller polygons
 * **Strings:** Delete the first character of a string and end up with a smaller string
 
-# Proof by Contradiction
+## Proof by Contradiction
 The basic schema of a contradiction is:
 * Assume that the hypothesis *is false*
 * Develop some logical consequences of this assumption
@@ -63,8 +64,5 @@ for i:=0; i<m; i++ {
 
 This `prod` should be divisible by all prime numbers because the way it is contructed. But if we consider `prod + 1` it can't be divisible by 2 (a prime number) because `prod` already is. Same if try division by 3 and every other listed prime number. Since `prod + 1` can not be divible by all listed number on `n`, `prod + 1` must be a prime number, disproving that only exist a `m` amount of prime numbers.
 
-# War Story: Psychic Modeling
-Problem on page 39 of the studied book.
-Implementation: [Psychic Modeling](./psychicModeling.go)
-
+# Exercices
 
