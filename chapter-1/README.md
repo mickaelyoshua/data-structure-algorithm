@@ -1,6 +1,6 @@
 # Notes
-## Induction and Recursion
 
+## Induction and Recursion
 As the book says, recursion is basically induction in action.
 
 Induction is a form of prove the correctness of and algorithm to a infinite number of samples, from a finite number of samples.
@@ -15,12 +15,12 @@ E.g.: The Domino Effect
 For recursion we have the same principle: Something dealing with the first values, the starting point, and a condition to make the succession.
 
 E.g.: Fibonacci Recursion:
-```go
-func FibonacciRecursion(n int) int {
-	if n <= 1 { // Starting Point
-		return n
-	}
-	return FibonacciRecursion(n-1) + FibonacciRecursion(n-2) // Rule of Succession
+```rust
+fn fibonacci_recursion(n: u64) -> u64 {
+    if n <= 1 { // starting point
+        return n
+    }
+    fibonacci_recursion(n-1) + fibonacci_recursion(n-2) // rule of succession
 }
 ```
 
@@ -34,8 +34,8 @@ Most of the algorithms are designed to work on specific abstract structures:
 * **Plygons:** Define regions in some geometric spaces. E.g.: The borders of a country
 * **Strings:** Sequence of characters or patterns. E.g.: A personal name
 
-## Recurcive Objects
-Learning to thing recursively iss learning to look for big things that are mad of small things from the same type. Each abstract structure can be described on a recursive way.
+## Recursive Objects
+Learning to do things recursively is learning to look for big things that are made of small things from the same type. Each abstract structure can be described on a recursive way.
 * **Permutation:** Delete the first element of a permutation of *n* things {1,...,n} and you end up with a permutation of *n-1* things {1,...,n-1}
 * **Subsets:** Every subset of {1,...,n} contains a subset of {1,...,n-1}
 * **Trees:** Delete the root of a tree and we get a set of small trees
@@ -52,14 +52,14 @@ The basic schema of a contradiction is:
 
 E.g.: Euclid's proof of infinite prime numbers. If we assume that there is a finite number of prime numbers as *p1, ..., pm* and start working with that.
 We construct a number that is the product of all the prime numbers:
-```go
-n := []int{p1, ... ,pn}
-m := len(n)
-prod := 1
+```rust
+    let n = [p1,...,pn];
+    let m = n.len();
+    let mut prod = 1;
 
-for i:=0; i<m; i++ {
-    prod = prod*n[i]
-}
+    for i in 0..m {
+        prod *= n[i];
+    }
 ```
 
 This `prod` should be divisible by all prime numbers because the way it is contructed. But if we consider `prod + 1` it can't be divisible by 2 (a prime number) because `prod` already is. Same if try division by 3 and every other listed prime number. Since `prod + 1` can not be divible by all listed number on `n`, `prod + 1` must be a prime number, disproving that only exist a `m` amount of prime numbers.
