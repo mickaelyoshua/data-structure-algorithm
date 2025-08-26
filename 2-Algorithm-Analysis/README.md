@@ -30,3 +30,8 @@ List of classes of functions in dominance order (g >> f):
 * **Factorial functions:** f(n) = n!
 
 > n! >> c^n >> n^3 >> n^2 >> n * log n >> n >> log n >> 1
+
+## Logarithm
+Two implications of logarithm's properties are important to appreciate from an algorithmic perspective:
+* *The base of logarithm has no real impact on the growth rate*
+* *Logarithms cut any function down to size*: The growth rate of any polinomial function is O(lg n)
