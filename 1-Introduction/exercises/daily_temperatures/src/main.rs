@@ -2,6 +2,16 @@
 
 fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
     let temperatures_len = temperatures.len();
+    if temperatures_len < 1 || temperatures_len > 10_usize.pow(5) {
+        panic!("Temperatures length is out of bounds.");
+    }
+
+    for t in temperatures.iter() {
+        if *t < 30 || *t > 100 {
+            panic!("Temperature out of bounds: {t}");
+        }
+    }
+
     let mut answer = vec![0; temperatures_len];
     let mut stack: Vec<usize> = Vec::new();
 
