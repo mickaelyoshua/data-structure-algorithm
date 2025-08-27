@@ -2,14 +2,13 @@
 
 fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
     let temperatures_len = temperatures.len();
-    if temperatures_len < 1 || temperatures_len > 10_usize.pow(5) {
+    
+    if !(1..=10_usize.pow(5)).contains(&temperatures_len) {
         panic!("Temperatures length is out of bounds.");
     }
 
-    for t in temperatures.iter() {
-        if *t < 30 || *t > 100 {
-            panic!("Temperature out of bounds: {t}");
-        }
+    if let Some(invalid_temp) = temperatures.iter().find(|&t| !(30..=100).contains(t)) {
+        panic!("Temperature out of bounds: {invalid_temp}");
     }
 
     let mut answer = vec![0; temperatures_len];
@@ -45,4 +44,14 @@ fn main() {
     let temperatures = vec![90,60,30];
     let answer = daily_temperatures(temperatures);
     assert_eq!(answer, [0,0,0]);
+
+    // ERROR length
+    // let temperatures = vec![0; 11_usize.pow(5)];
+    // let answer = daily_temperatures(temperatures);
+    // assert_eq!(answer, [0,0,0]);
+
+    // ERROR temperature
+    // let temperatures = vec![900,60,30];
+    // let answer = daily_temperatures(temperatures);
+    // assert_eq!(answer, [0,0,0]);
 }
