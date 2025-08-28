@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/remove-k-digits/
+
 fn remove_kdigits(num: &str, k: i32) -> String {
     let num_len = num.len() as i32;
     if k >= num_len {
