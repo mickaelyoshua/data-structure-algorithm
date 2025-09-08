@@ -20,4 +20,19 @@
 | **Size**             | Static (fixed at creation)          | Dynamic (can grow or shrink)          |
 | **Memory Overhead**  | Minimal                             | Higher (stores data + pointers)       |
 
+Advantages of linked list structures over static arrays include:
+* Overflow on linked structures never occurs unless the memory is actually full.
+* Insertion and deletion are simples then for static arrays.
+* With large records, moving points is easier and faster then moving the items themselves.
+
+Conversely, the relative advantages of arrays include:
+* Space efficiency: linked structures require extra memory for storing pointer field.
+* Efficient random access to items in arrays.
+* Better memory locality and cache performance then random pointer jumping.
+
+Dynamic memory allocation provides flexibility on how it is used the limited storage resources.
+
+Since lists and arrays can be thought as recursive data structures (cut a string, list or array and have a two smaller pieces) it leads to efficient dived-and-conquer algorithms such as quicksort and binary search.
+
+## Containers: Stacks and Queues
 
