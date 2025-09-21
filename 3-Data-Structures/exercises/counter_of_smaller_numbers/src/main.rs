@@ -16,10 +16,33 @@ fn main() {
     assert_eq!(answer, count_smaller(nums));
 }
 
-use counter_of_smaller_numbers::fenwich_tree;
+use std::collections::HashMap;
+use counter_of_smaller_numbers::fenwick_tree::FenwickTree;
 
 fn count_smaller(nums: Vec<i32>) -> Vec<i32> {
+    let mut sorted_unique_nums = nums.clone();
+    sorted_unique_nums.sort_unstable();
+    sorted_unique_nums.dedup(); // remove consecutive repeated elements
 
+    let mut rank_map = HashMap::new();
+    for (i, &num) in sorted_unique_nums.iter().enumerate() {
+        // Insert the number as the key and its 1-based rank as the value
+        // Fenwick Tree has a 1-based index
+        rank_map.insert(num, (i + 1) as i32);
+    }
+
+    let mut result: Vec<i32> = vec![];
+    let mut fenwick_tree = FenwickTree::new(sorted_unique_nums.len());
+
+    for &num in nums.iter().rev() {
+
+        let rank = *rank_map.get(&num).unwrap();
+        let count = fenwick_tree.query(rank-1);
+        result.push(count);
+        fenwick_tree.update(rank, 1);
+    }
+    result.reverse();
+    result
 }
 // O(n^2)
 // fn count_smaller(nums: Vec<i32>) -> Vec<i32> {
