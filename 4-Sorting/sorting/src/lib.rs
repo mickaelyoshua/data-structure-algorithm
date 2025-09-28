@@ -62,6 +62,37 @@ fn merge_sort_recursive<T: PartialOrd + Clone + Debug>(arr: &mut [T], low: usize
     }
 }
 
+fn partition<T: PartialOrd>(arr: &mut [T], low: usize, high: usize) -> usize {
+    let mut first_high = low;
+    for i in low..high {
+        // Lomuto Partition Scheme
+        if arr[i] < arr[high] {
+            arr.swap(i, first_high);
+            first_high += 1;
+        }
+    }
+
+    arr.swap(high, first_high);
+    first_high
+}
+
+fn quick_sort_recursive<T: PartialOrd + Debug>(arr: &mut [T], low: usize, high: usize) {
+    if low < high {
+        let p = partition(arr, low, high);
+        if p > 0 {
+            quick_sort_recursive(arr, low, p-1);
+        }
+        quick_sort_recursive(arr, p+1, high);
+    }
+}
+
+pub fn quick_sort<T: PartialOrd + Debug>(arr: &mut [T]) {
+    let len = arr.len();
+    if len > 1 {
+        quick_sort_recursive(arr, 0, len-1);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -112,5 +143,10 @@ mod tests {
     #[test]
     fn test_merge_sort() {
         run_sort_test(merge_sort);
+    }
+
+    #[test]
+    fn test_quick_sort() {
+        run_sort_test(quick_sort);
     }
 }
