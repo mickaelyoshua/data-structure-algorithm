@@ -1,8 +1,6 @@
 // https://leetcode.com/problems/sort-list/
 // Given the head of a linked list, return the list after sorting it in ascending order.
 
-use std::{ptr, thread::current};
-
 fn main() {
     let input = ListNode::from_vec(vec![4,2,1,3]);
     let answer = ListNode::from_vec(vec![1,2,3,4]);
@@ -51,8 +49,10 @@ struct Solution;
 
 impl Solution {
     pub fn sort_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        if head.is_none() || head.as_ref().unwrap().next.is_none() {
-            return None;
+        head.as_ref()?;
+
+        if head.as_ref().unwrap().next.is_none() {
+            return head;
         }
 
         // Get list length
@@ -82,7 +82,29 @@ impl Solution {
         Self::merge(sorted_first, sorted_second)
     }
 
-    fn merge(list1: Option<Box<ListNode>>, list2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        unimplemented!()
+    fn merge(mut list1: Option<Box<ListNode>>, mut list2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        let mut list = ListNode::new(0);
+        let mut tail = &mut list;
+        
+        while list1.is_some() && list2.is_some() {
+            // Identify wich one is the smallest
+            let smaller = if list1.as_ref().unwrap().val <= list2.as_ref().unwrap().val {
+                &mut list1
+            } else {
+                &mut list2
+            };
+            
+            // Take the smaller node and replace with its next, then put the smaller node on the
+            // new list to be returned
+            let mut smaller_node = smaller.take().unwrap();
+            *smaller = smaller_node.next.take(); // put the rest back to the list to be merged
+            tail.next = Some(smaller_node);
+
+            // Update tail
+            tail = tail.next.as_mut().unwrap();
+        }
+
+        tail.next = if list1.is_some() { list1 } else { list2 };
+        list.next // the first node is the dummy 0 value
     }
 }

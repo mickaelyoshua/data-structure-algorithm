@@ -42,7 +42,6 @@ fn merge<T: PartialOrd + Clone + Debug>(arr: &mut [T], low: usize, middle: usize
 }
 
 /// Sorts a slice using the merge sort algorithm.
-///
 /// This is a wrapper function that provides a convenient public API.
 pub fn merge_sort<T: PartialOrd + Clone + Debug>(arr: &mut [T]) {
     let len = arr.len();
