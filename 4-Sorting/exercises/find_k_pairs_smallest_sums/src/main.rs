@@ -11,47 +11,16 @@ fn main() {
     assert_eq!(answer, output);
 }
 
+struct Solution;
+
 struct MinHeap {
-    elems: Vec<i32>,
+    elems: Vec<(i32, usize, usize)>,
 }
 
 impl MinHeap {
     pub fn new() -> Self {
         MinHeap { elems: Vec::new() }
     }
-
-    fn bubble_up(&mut self, i: usize) {
-        if let Some(parent_index) = self.parent(i) && self.elems[parent_index] > self.elems[i] {
-            self.elems.swap(i, parent_index);
-            self.bubble_up(parent_index);
-        }
-    }
-
-    pub fn push(&mut self, val: i32) {
-        self.elems.push(val);
-        let i = self.elems.len() - 1;
-        self.bubble_up(i);
-
-    }
-
-    fn bubble_down(&mut self, i: usize) {
-
-    }
-
-    pub fn pop(&mut self) -> Option<i32> {
-        if self.elems.len() <= 1 {
-            return self.elems.pop();
-        }
-
-        let value = self.elems[0];
-        self.elems[0] = self.elems.pop().unwrap();
-
-        self.bubble_down(0);
-
-        Some(value)
-    }
-
-
 
     fn parent(&self, i: usize) -> Option<usize> {
         if i == 0 {
@@ -75,14 +44,74 @@ impl MinHeap {
         }
         Some(child)
     }
+
+    fn bubble_up(&mut self, i: usize) {
+        if let Some(parent_index) = self.parent(i) && self.elems[parent_index].0 > self.elems[i].0 {
+            self.elems.swap(i, parent_index);
+            self.bubble_up(parent_index);
+        }
+    }
+
+    pub fn push(&mut self, val: (i32, usize, usize)) {
+        self.elems.push(val);
+        let i = self.elems.len() - 1;
+        self.bubble_up(i);
+
+    }
+
+    fn bubble_down(&mut self, i: usize) {
+        let mut smallest = i;
+
+        if let Some(child_index) = self.left_child(i) && self.elems[child_index].0 < self.elems[smallest].0 {
+            smallest = child_index;
+        }
+        if let Some(child_index) = self.right_child(i) && self.elems[child_index].0 < self.elems[smallest].0 {
+            smallest = child_index;
+        }
+
+        if smallest != i {
+            self.elems.swap(smallest, i);
+            self.bubble_down(smallest);
+        }
+    }
+
+    pub fn pop(&mut self) -> Option<(i32, usize, usize)> {
+        if self.elems.len() <= 1 {
+            return self.elems.pop();
+        }
+
+        let min = self.elems.swap_remove(0);
+        self.bubble_down(0);
+
+        Some(min)
+    }
+
+    pub fn peek(&self) -> Option<&(i32, usize, usize)> {
+        self.elems.iter().peekable().peek().map(|v| &**v)
+    }
 }
 
-
-struct Solution;
 impl Solution {
-    pub fn k_smallest_pairs(nums1: Vec<i32>, nums2: Vec<i32>, k: i32) -> Vec<Vec<i32>> {
-        
+    pub fn k_smallest_pairs(nums1: Vec<i32>, nums2: Vec<i32>, mut k: i32) -> Vec<Vec<i32>> {
+        let mut result: Vec<Vec<i32>> = Vec::new();
+        let mut min_heap = MinHeap::new();
 
-        unimplemented!()
+        for (i, num1) in nums1.iter().enumerate().take(k as usize) {
+            min_heap.push( (num1+nums2[0], i, 0) );
+        }
+
+        while k > 0 && min_heap.peek().is_some() {
+            let smallest = min_heap.pop().unwrap();
+            let pair = vec![nums1[smallest.1], nums2[smallest.2]];
+            result.push(pair);
+
+            k -= 1;
+
+            if smallest.2 + 1 < nums2.len() { // if there is a next element in nums2
+                min_heap.push( (nums1[smallest.1] + nums2[smallest.2+1], smallest.1, smallest.2+1) );
+            }
+        }
+
+        result
     }
 }
