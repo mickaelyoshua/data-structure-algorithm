@@ -1,0 +1,6 @@
+[package]
+name = "find_k_pairs_smallest_sums"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
