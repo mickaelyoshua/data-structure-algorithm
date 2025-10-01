@@ -27,7 +27,7 @@ impl ListNode {
             next: None,
         }
     }
-
+    
     pub fn from_vec(vals: Vec<i32>) -> Self {
         let mut list = ListNode::new(vals[0]);
         for val in vals[1..].iter() {
@@ -53,51 +53,28 @@ pub fn create_list(node: ListNode) -> Option<Box<ListNode>> {
 
 struct Solution;
 impl Solution {
-    pub fn merge_k_lists(mut lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
+    pub fn merge_k_lists(lists: &[Option<Box<ListNode>>]) -> Option<Box<ListNode>> {
         if lists.is_empty() {
             return None;
         }
 
         let len = lists.len();
-        let mut interval = 1;
-        while interval < len {
 
-            let mut i = 0;
-            while i + interval < len {
-                let list1 = lists[i].take();
-                let list2 = lists[i + interval].take();
-
-                lists[i] = Self::merge(list1, list2);
-
-                i += interval + interval;
-            }
-
-            interval *= 2;
-        }
-        lists[0].take()
-    }
-
-    fn merge(mut left: Option<Box<ListNode>>, mut right: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        let mut list = ListNode::new(0);
-        let mut tail = &mut list;
-
-        while left.is_some() && right.is_some() {
-            let smaller = if left.as_ref().unwrap().val < right.as_ref().unwrap().val {
-                &mut left
-            } else {
-                &mut right
-            };
-
-            // Remove the node and update the current list to the next
-            let mut node = smaller.take();
-            *smaller = node.as_mut().unwrap().next.take();
-
-            // Update current list and the tail
-            tail.next = node;
-            tail = tail.next.as_mut().unwrap();
+        if len == 1 {
+            return lists[0].clone();
         }
 
-        tail.next = if left.is_some() { left } else { right };
-        list.next
+        let middle = len / 2;
+        let (left_half, right_half) = lists.split_at_mut(middle);
+
+        let left_sorted = Self::merge_k_lists(left_half.to_vec());
+        let right_sorted = Self::merge_k_lists(right_half.to_vec());
+
+        Self::merge(left_sorted, right_sorted)
     }
+
+    fn merge(left: Option<Box<ListNode>>, right: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        unimplemented!()
+    }
+
 }
